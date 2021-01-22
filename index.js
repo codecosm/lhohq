@@ -27,7 +27,7 @@ client.on('message', async message=> {
 
             // Fetch the newest comment from LHOHQ ONLINE WEBHOME
             try {
-                let newestTimestamp = 'Thu Jan 21, 2021 15:40:36'
+                let newestTimestamp = 'Fri Jan 22, 2021 12:39:18'
 
                 setInterval(() => {
                     fetch('http://phonograph.lhohq.info/index.php')
@@ -45,15 +45,34 @@ client.on('message', async message=> {
                             let author = text.match(authorReg).toString().replace(',<p class=leftbox><h3>,</h3>', '').replace(/<br \/>|<A href=(.*?)>|<\/a>/gim, '')
                             let comment = text.match(commentReg).toString().replace(',<p class=commentbox>,</p>', '').replace(/<br \/>|<A href=(.*?)>|<\/a>/gim, '')
 
+
+
                             if(newestTimestamp !== timestamp) {
                                 let colors= ['#ffccff', '#99ffcc', '#cc99ff', '#99cc00', '#0eedd5', '#ffff00']
-                                let color = colors[Math.floor(Math.random() * colors.length)];
+                                let color = colors[Math.floor(Math.random() * colors.length)]
 
-                                let Embed = new Discord.MessageEmbed()
-                                .setAuthor(author)
-                                .setTitle(comment)
-                                .setFooter(timestamp)
-                                .setColor(color)
+                                let Embed
+                                
+                                if (comment.length > 255) {
+                                    comment = comment.replace(/ {2,}/gi, '')
+                                    let commentArray = comment.match(/.{1,255}/g)
+
+                                    Embed = new Discord.MessageEmbed()
+                                    .setAuthor(author)
+                                    .setColor(color)
+                                    .setFooter(timestamp)
+
+                                    commentArray.forEach(item => {
+                                        Embed.addField(item, '\u200b')
+                                    })
+                                }
+                                else {
+                                    Embed = new Discord.MessageEmbed()
+                                    .setAuthor(author)
+                                    .setTitle(comment)
+                                    .setFooter(timestamp)
+                                    .setColor(color)
+                                }
         
                                 client.channels.cache.get(channelID).send(Embed)
         
