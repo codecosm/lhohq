@@ -1,8 +1,6 @@
 // Requirements
+require('dotenv').config()
 const fetch = require('node-fetch')
-const fs = require('fs')
-const nodeHtmlToImage = require('node-html-to-image')
-
 const Discord = require('discord.js')
 const client = new Discord.Client()
 
@@ -81,13 +79,12 @@ client.on('message', async message=> {
                         }
                     })
                 }, 5000);
-            } catch (error) {
-            }
+            } catch (error) {}
         }
     }
 })
 
-client.login('ODAxOTA0ODMxNDU0NTExMTQ0.YAneEg.vQatHWYMAiTpzwu7VBo2_aTAo9g');
+client.login(prcoess.env.token);
 
 
 
