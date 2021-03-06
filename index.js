@@ -28,8 +28,8 @@ client.on('message', async message=> {
                 let newestTimestamp = 'Fri Jan 22, 2021 12:39:18'
 
                 setInterval(() => {
-                    fetch('http://phonograph.lhohq.info/index.php')
-                    .then((resp) => resp.text())
+                    fetch('http://phonograph.lhohq.info/index.php').catch(()=>{})
+                    .then((resp) => resp.text()).catch(()=>{})
                     .then(function (data) {
                         let text = data.substring(828).replace(/(\r\n|\n|\r)/gm, ' ').replace(/<!--( {2,})(.*?) {2,}-->/gi, '')
 
@@ -77,7 +77,7 @@ client.on('message', async message=> {
                                 newestTimestamp = timestamp
                             }
                         }
-                    })
+                    }).catch(()=>{})
                 }, 5000);
             } catch (error) {}
         }
